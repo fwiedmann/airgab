@@ -10,8 +10,6 @@ RESYNC_OPTIONS = -acP
 # test the rsync connection with a dry-run
 RESYNC_TEST_OPTIONS = --dry-run
 
-# will be  stored under /var/spool/cron 
-CRONJOB_NAME = ghost-backup
 #  cron schedulue expression (for every hour: 0 * * * *)
 CRONJOB_SCHEDULE = 0 * * * *
 
