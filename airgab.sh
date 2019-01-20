@@ -1,9 +1,12 @@
 #!/usr/bin/env bash
 
+set -e
+set -o pipefail
+
 
 SOURCE_DATA_DIRCECTORY="$1"
 DESTIANTION_DATA_DIRECTORY="$2"
-RSYNC_OPTIONS={3:=-a}
+RSYNC_OPTIONS=${3:-"-a"}
 
 function check() {
     if [[ ! "$(type rsync)" ]]; then
