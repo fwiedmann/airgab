@@ -1,1 +1,0 @@
-0 1 0 0 0 /home/pi/airgab/airgab.sh pi@192.168.2.233:/opt/ghost/data /home/pi -acP /var/spool/cron/ghost-backup
