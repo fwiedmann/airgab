@@ -18,15 +18,16 @@ CRONJOB_SCHEDULE = 0 * * * *
 all: install_cronjob
 
 prepare:
-	chmod +x airgab.sh
+        chmod +x airgab.sh
+        mkdir -pv $(DESTIANTION_DATA_DIRECTORY)
 
 test: prepare
-		./airgab.sh  $(SOURCE_DATA_DIRCECTORY) $(DESTIANTION_DATA_DIRECTORY) $(RESYNC_TEST_OPTIONS)
+        ./airgab.sh  $(SOURCE_DATA_DIRCECTORY) $(DESTIANTION_DATA_DIRECTORY) $(RESYNC_TEST_OPTIONS)
 
 run: test
-	./airgab.sh  $(SOURCE_DATA_DIRCECTORY) $(DESTIANTION_DATA_DIRECTORY) $(RESYNC_OPTIONS)
+        ./airgab.sh  $(SOURCE_DATA_DIRCECTORY) $(DESTIANTION_DATA_DIRECTORY) $(RESYNC_OPTIONS)
 
-install_cronjob: install_cronjob
-	echo "$(CRONJOB_SCHEDULE) $$PWD/airgab.sh $(SOURCE_DATA_DIRCECTORY) $(DESTIANTION_DATA_DIRECTORY) $(RESYNC_OPTIONS)" > $$PWD/temp_cronjob
-	crontab -u "$$LOGNAME" temp_cronjob
+install_cronjob: run
+        echo "$(CRONJOB_SCHEDULE) $$PWD/airgab.sh $(SOURCE_DATA_DIRCECTORY) $(DESTIANTION_DATA_DIRECTORY) $(RESYNC_OPTIONS)" > $$PWD/temp_cronjob
+        crontab -u "$$LOGNAME" temp_cronjob
 
