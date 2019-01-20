@@ -1,0 +1,9 @@
+SOURCE_DATA_DIRCECTORY = pi@198.162.2.233:/opt/ghost/data
+DESTIANTION_DATA_DIRECTORY = $(HOME)
+RSYNC_OPTIONS = -an
+
+prepare:
+	chmod +x airgab.sh
+
+test:
+	./airgab.sh  $(SOURCE_DATA_DIRCECTORY) $(DESTIANTION_DATA_DIRECTORY) $(RSYNC_OPTIONS)
