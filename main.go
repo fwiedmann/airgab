@@ -1,12 +1,8 @@
 package main
 
-import (
-	"fmt"
-
-	"github.com/fwiedmann/airgab/pkg/opts"
-)
+import "github.com/fwiedmann/airgab/pkg/rsync"
 
 func main() {
-	o := opts.New()
-	fmt.Print(o.Source)
+	r := rsync.InitRsync("pi", "192.168.2.233", "22", "/home/pi/test.txt", ".")
+	r.CheckConnection()
 }
