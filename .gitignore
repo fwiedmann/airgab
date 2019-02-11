@@ -10,6 +10,7 @@ temp_cronjob
 *.dll
 *.so
 *.dylib
+*.sum
 
 # Test binary, built with `go test -c`
 *.test
