@@ -1,6 +1,8 @@
 package opts
 
 import (
+	"time"
+
 	kingpin "gopkg.in/alecthomas/kingpin.v2"
 )
 
@@ -11,16 +13,25 @@ var (
 	source      = kingpin.Flag("source", "Absolute path to directory from where the data will be backuped.").PlaceHolder("/source/directory").Required().String()
 	destination = kingpin.Flag("destination", "Absolute path to directory whre the data will be stored.").PlaceHolder("/destination/directory").Required().String()
 	options     = kingpin.Flag("options", "rsync options").PlaceHolder("-a").Default("-a").String()
+	interval    = kingpin.Flag("interval", "interval of airgab run").Required().String()
+	sshkey      = kingpin.Flag("private-key", "absolute path to private ssh key").Default("/home/user/.ssh/id_rsa").String()
 )
 
 // Opts from user input
 type Opts struct {
-	Debug                                    bool
-	User, Host, Source, Destination, Options string
+	Debug                                            bool
+	User, Host, Source, Destination, Options, Sshkey string
+	Interval                                         time.Duration
 }
 
 // New returns opts struct for use in main
 func New() *Opts {
 	kingpin.Parse()
-	return &Opts{*debug, *user, *host, *source, *destination, *options}
+
+	parsedInterval, err := time.ParseDuration(*interval)
+	if err != nil {
+		panic(err)
+	}
+
+	return &Opts{*debug, *user, *host, *source, *destination, *options, *sshkey, parsedInterval}
 }
