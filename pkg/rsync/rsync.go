@@ -23,7 +23,7 @@ func (r *Rsync) GetBackupSize() float64 {
 	var files []int64
 	var size int64
 
-	err := filepath.Walk(r.destination+"/ghost", func(path string, info os.FileInfo, err error) error {
+	err := filepath.Walk(r.destination, func(path string, info os.FileInfo, err error) error {
 		if !info.IsDir() {
 			files = append(files, info.Size())
 			return nil
