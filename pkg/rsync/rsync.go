@@ -52,7 +52,7 @@ func (r *Rsync) CheckKey() error {
 
 // CheckConnection  A rsync dry-run will test the ssh connection and backup functionality
 func (r *Rsync) CheckConnection() {
-	cmd := exec.Command("rsync", "--dry-run", r.user+"@"+r.host+":"+r.source, r.destination)
+	cmd := exec.Command("rsync", "--dry-run", "-e ssh '-o StrictHostKeyChecking=no'", r.user+"@"+r.host+":"+r.source, r.destination)
 	if err := cmd.Run(); err != nil {
 		panic(err)
 	}
@@ -60,7 +60,7 @@ func (r *Rsync) CheckConnection() {
 
 // RunSync  Pass rsync options as one string.
 func (r *Rsync) RunSync() {
-	cmd := exec.Command("rsync", r.options, r.user+"@"+r.host+":"+r.source, r.destination)
+	cmd := exec.Command("rsync", "-e ssh '-o StrictHostKeyChecking=no'", r.options, r.user+"@"+r.host+":"+r.source, r.destination)
 	if err := cmd.Run(); err != nil {
 		panic(err)
 	}
