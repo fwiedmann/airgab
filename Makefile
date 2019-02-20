@@ -1,7 +1,28 @@
-all: build run
+DOCKER_REGISTRY_USER = $$DOCKER_REGISTRY_USER
+DOCKER_REGISTRY_PASSWORD = $$DOCKER_REGISTRY_PASSWORD
+IMAGE_TAG = 1.0
+
+SSH_FOLDER = $$HOME
+
+
+all:  prepare build run test
+
+prepare:
+	mkdir -pv ./backup
+
+cleanup:
+	sudo rm -rf ./backup
+	docker rmi --force airgab wiedmannfelix/airgab:$(IMAGE_TAG)  wiedmannfelix/airgab:latest
 
 build:
-	go build
+	docker build -t airgab .
 
-run:
-	./airgab --user=pi --host=192.168.2.233 --source=/opt/ghost --destination=/home/fwiedmann --options=-a --interval=10s --private-key=/home/fwiedmann/.ssh/id_rsa
+run: 
+	docker run -v $$PWD/backup:/backup -v $(SSH_FOLDER)/.ssh/id_rsa:/root/.ssh/id_rsa -p 9100:9100 airgab --user=pi --host=192.168.2.233 --source=/opt/ghost --destination=/backup/ --options=-a --interval=10s --private-key=$$HOME/.ssh/id_rsa
+
+push:
+	docker login -u $(DOCKER_REGISTRY_USER) -p $(DOCKER_REGISTRY_PASSWORD)
+	docker tag airgab wiedmannfelix/airgab:$(IMAGE_TAG)
+	docker tag airgab wiedmannfelix/airgab:latest
+	docker push wiedmannfelix/airgab:$(IMAGE_TAG)
+	docker push wiedmannfelix/airgab:latest
