@@ -11,12 +11,17 @@ RUN CGO_ENABLED=0 go build -a -o airgab .
 
 FROM alpine:3.9
 
-WORKDIR /airgab
+RUN apk --no-cache add rsync openssh bash
 
-RUN apk --no-cache add rsync openssh
-RUN mkdir -pv /root/.ssh/ \
-    && chmod 0700 /root/.ssh
+RUN addgroup pilot \
+    && adduser -D pilot -G pilot
 
+RUN mkdir -pv /home/pilot/.ssh/ \
+    && chmod 0700 /home/pilot/.
+
+WORKDIR /home/pilot
+
+COPY entrypoint.sh ./entrypoint.sh
 COPY --from=builder /go/src/github.com/fwiedmann/airgab/airgab ./airgab
 
-ENTRYPOINT [ "./airgab" ]
+ENTRYPOINT [ "./entrypoint.sh" ]
