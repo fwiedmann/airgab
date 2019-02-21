@@ -1,4 +1,4 @@
-![Image of gopher](images/appenginegophercolor.jpg =900x500)
+![Image of gopher](images/appenginegophercolor.jpg)
 
 # What I learned
 - Use dep tool to manage my dependcies
