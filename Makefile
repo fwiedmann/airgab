@@ -18,7 +18,7 @@ build:
 	docker build -t airgab .
 
 run: 
-	docker run -d --user pilot -v $$PWD/backup:/home/pilot/backup -v $(SSH_FOLDER)/.ssh/id_rsa:/home/pilot/.id_rsa -p 9100:9100 airgab --user=pi --host=192.168.2.233 --source=/opt/ghost --destination=/home/pilot/backup/ --options=-a --interval=10s --private-key=$$HOME/.ssh/id_rsa
+	docker run -d pilot -v $$PWD/backup:/home/pilot/backup -v $(SSH_FOLDER)/.ssh/id_rsa:/home/pilot/.id_rsa -p 9100:9100 airgab --user=pi --host=192.168.2.233 --source=/opt/ghost --destination=/home/pilot/backup/ --options=-a --interval=10s --private-key=$$HOME/.ssh/id_rsa
 
 push:
 	docker login -u $(DOCKER_REGISTRY_USER) -p $(DOCKER_REGISTRY_PASSWORD)
