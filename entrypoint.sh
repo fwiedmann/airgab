@@ -18,5 +18,5 @@ cp .id_rsa .ssh/id_rsa
 # change owner of ssh key to container user
 chown pilot:pilot /home/pilot/.ssh/id_rsa
 
-# run airgab
-./airgab "$@"
+# step down from root and  run airgab
+su -c "./airgab $@" - pilot
