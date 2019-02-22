@@ -11,7 +11,7 @@ RUN CGO_ENABLED=0 go build -a -o airgab .
 
 FROM alpine:3.9
 
-RUN apk --no-cache add rsync openssh bash
+RUN apk --no-cache add rsync openssh bash curl
 
 RUN addgroup pilot \
     && adduser -D pilot -G pilot
@@ -25,3 +25,4 @@ COPY entrypoint.sh ./entrypoint.sh
 COPY --from=builder /go/src/github.com/fwiedmann/airgab/airgab ./airgab
 
 ENTRYPOINT [ "./entrypoint.sh" ]
+HEALTHCHECK --interval=10s --timeout=5s --retries=3 CMD curl -f http://localhost:9100/metrics || exit 1
