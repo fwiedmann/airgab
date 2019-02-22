@@ -8,7 +8,7 @@ fi
 
 # check if ssh key is mounted
 if [[ ! -f "/home/pilot/.ssh/id_rsa"  ]];then
-    echo 'No private ssh-key was found. Please mount the key like this: ""/home/pilot/.ssh/id_rsa"'
+    echo 'No private ssh-key was found. Please mount the key like this: "/home/pilot/.ssh/id_rsa"'
     exit 1
 fi
 
