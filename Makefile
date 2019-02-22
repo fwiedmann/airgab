@@ -5,7 +5,7 @@ IMAGE_TAG = 1.0
 SSH_FOLDER = $$HOME
 
 
-all:  prepare build run test
+all:  prepare build run
 
 prepare:
 	mkdir -pv ./backup
@@ -18,7 +18,7 @@ build:
 	docker build -t airgab .
 
 run: 
-	docker run --user pilot -v $$PWD/backup:/home/pilot/backup -v $(SSH_FOLDER)/.ssh/id_rsa:/home/pilot/.ssh/id_rsa -p 9100:9100 airgab --user=pi --host=192.168.2.233 --source=/opt/ghost --destination=/home/pilot/backup/ --options=-a --interval=10s --private-key=$$HOME/.ssh/id_rsa
+	docker run -d --user pilot -v $$PWD/backup:/home/pilot/backup -v $(SSH_FOLDER)/.ssh/id_rsa:/home/pilot/.ssh/id_rsa -p 9100:9100 airgab --user=pi --host=192.168.2.233 --source=/opt/ghost --destination=/home/pilot/backup/ --options=-a --interval=10s --private-key=$$HOME/.ssh/id_rsa
 
 push:
 	docker login -u $(DOCKER_REGISTRY_USER) -p $(DOCKER_REGISTRY_PASSWORD)
