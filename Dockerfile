@@ -11,6 +11,8 @@ RUN CGO_ENABLED=0 go build -a -o airgab .
 
 FROM alpine:3.9
 
+LABEL maintainer=https://github.com/fwiedmann github-project=https://github.com/fwiedmann/airgab
+
 RUN apk --no-cache add rsync openssh bash curl
 
 RUN addgroup pilot \
