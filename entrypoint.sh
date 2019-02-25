@@ -7,7 +7,7 @@ if [[ -z "$DEBUG" ]]; then
 fi
 
 # check if ssh key is mounted
-if [[ ! -f "/home/pilot/id_rsa"  ]];then
+if [[ ! -f "/home/pilot/.id_rsa"  ]];then
     echo 'No private ssh-key was found. Please mount the key like this: "/home/pilot/.ssh/id_rsa"'
     exit 1
 fi
@@ -19,4 +19,4 @@ cp .id_rsa .ssh/id_rsa
 chown pilot:pilot /home/pilot/.ssh/id_rsa
 
 # step down from root and  run airgab
-su -c "./airgab $@" - pilot
+su pilot -c "./airgab $*"
