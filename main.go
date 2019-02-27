@@ -10,6 +10,7 @@ import (
 	"github.com/fwiedmann/airgab/pkg/rsync"
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
+	log "github.com/sirupsen/logrus"
 )
 
 func main() {
@@ -35,6 +36,8 @@ func main() {
 			time.Sleep(opts.Interval)
 		}
 	}()
+	log.Info("Starting to handle connections under /metrics")
+	log.Infof("Start to back up %q", opts.Source)
 	http.Handle("/metrics", promhttp.HandlerFor(registry, promhttp.HandlerOpts{}))
 	http.ListenAndServe(":9100", nil)
 }

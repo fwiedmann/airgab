@@ -16,7 +16,7 @@ build:
 	docker build -t airgab .
 
 run: 
-	docker run -it -v $$PWD/backup:/home/pilot/backup -v $(SSH_FOLDER)/.ssh/id_rsa:/home/pilot/.id_rsa -p 9100:9100 airgab --user=pi --host=192.168.2.233 --source=/opt/ghost --destination=/home/pilot/backup/ --options=-a --interval=10s --private-key=$$HOME/.ssh/id_rsa
+	docker run -it -v $$PWD/backup:/home/pilot/backup -v $(SSH_FOLDER)/.ssh/id_rsa:/home/pilot/.id_rsa -p 9100:9100 airgab --user=pi --host=192.168.2.233 --source=/opt/ghost --options=-a --interval=10s
 
 push:
 	docker tag airgab wiedmannfelix/airgab:$(IMAGE_TAG)
