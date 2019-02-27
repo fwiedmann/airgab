@@ -6,6 +6,7 @@ import (
 	"path/filepath"
 
 	"github.com/fwiedmann/airgab/pkg/opts"
+	log "github.com/sirupsen/logrus"
 )
 
 // Rsync for client
@@ -42,19 +43,20 @@ func (r *Rsync) GetBackupSize() float64 {
 }
 
 // CheckKey checks if private key is existing
-func (r *Rsync) CheckKey() error {
+func (r *Rsync) CheckKey() {
+	log.Infof("Check if private key is existing under: %s.", r.sshkey)
 	_, err := os.Open(r.sshkey)
 	if err != nil {
-		return err
+		log.Panic("Cant find or open private ssh-key.")
 	}
-	return nil
 }
 
 // CheckConnection  A rsync dry-run will test the ssh connection and backup functionality
 func (r *Rsync) CheckConnection() {
+	log.Info("Check connection to source host.")
 	cmd := exec.Command("rsync", "--dry-run", "-e ssh '-o StrictHostKeyChecking=no'", r.user+"@"+r.host+":"+r.source, r.destination)
 	if err := cmd.Run(); err != nil {
-		panic(err)
+		log.Panic("Failed to connect to source host. Please check your connection settings and ssh-key.")
 	}
 }
 
@@ -62,6 +64,7 @@ func (r *Rsync) CheckConnection() {
 func (r *Rsync) RunSync() {
 	cmd := exec.Command("rsync", "-e ssh '-o StrictHostKeyChecking=no'", r.options, r.user+"@"+r.host+":"+r.source, r.destination)
 	if err := cmd.Run(); err != nil {
+		log.Panicf("Failed to backup %s. Please check your connection settings and ssh-key.", r.source)
 		panic(err)
 	}
 }

@@ -6,10 +6,8 @@ services:
     command: --user=pi \
               --host=192.168.2.233 \
               --source=/opt/ghost \
-              --destination=/home/pilot/backup/ \
               --options=-a \
-              --interval=10s \
-              --private-key=$HOME/.ssh/id_rsa
+              --interval=10s 
     ports: 
       - "9100:9100"
     volumes: 
