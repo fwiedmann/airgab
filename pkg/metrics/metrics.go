@@ -14,4 +14,6 @@ var (
 	AirgabBackupSize = prometheus.NewGauge(prometheus.GaugeOpts{
 		Name: "airgab_current_backup_size_megabyte",
 		Help: "Size of last backup in megabyte"})
+	AirgabBackupDuration = prometheus.NewGauge(prometheus.GaugeOpts{
+		Name: "airgab_backup_duration_in_minutes"})
 )

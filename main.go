@@ -24,11 +24,11 @@ func main() {
 	registry.MustRegister(metrics.AirgabCounter)
 	registry.MustRegister(metrics.AirgabTimeStamp)
 	registry.MustRegister(metrics.AirgabBackupSize)
+	registry.MustRegister(metrics.AirgabBackupDuration)
 
 	go func() {
 		for {
-			r.RunSync()
-
+			metrics.AirgabBackupDuration.Set(r.RunSync())
 			metrics.AirgabCounter.Inc()
 			metrics.AirgabTimeStamp.SetToCurrentTime()
 			metrics.AirgabBackupSize.Set(r.GetBackupSize())
