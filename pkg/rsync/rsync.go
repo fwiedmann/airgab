@@ -63,15 +63,15 @@ func (r *Rsync) CheckConnection() {
 
 // RunSync  Pass rsync options as one string.
 func (r *Rsync) RunSync() float64 {
-	timeBeforeSync := time.Now()
 	cmd := exec.Command("rsync", "-e ssh '-o StrictHostKeyChecking=no'", r.options, r.user+"@"+r.host+":"+r.source, r.destination)
-	timeAfterSync := time.Now()
-
-	durationInMinutes := 166.667 * (float64(timeAfterSync.Sub(timeBeforeSync)) / float64(time.Second))
+	timeBeforeSync := time.Now()
 
 	if err := cmd.Run(); err != nil {
 		log.Panicf("Failed to backup %s. Please check your connection settings and ssh-key.", r.source)
 		panic(err)
 	}
+
+	timeAfterSync := time.Now()
+	durationInMinutes := 166.667 * (float64(timeAfterSync.Sub(timeBeforeSync)) / float64(time.Second))
 	return durationInMinutes
 }
