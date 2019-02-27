@@ -28,7 +28,8 @@ func main() {
 
 	go func() {
 		for {
-			metrics.AirgabBackupDuration.Set(r.RunSync())
+			duration := r.RunSync()
+			metrics.AirgabBackupDuration.Set(duration)
 			metrics.AirgabCounter.Inc()
 			metrics.AirgabTimeStamp.SetToCurrentTime()
 			metrics.AirgabBackupSize.Set(r.GetBackupSize())

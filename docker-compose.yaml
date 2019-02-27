@@ -1,7 +1,7 @@
 version: "3"
 services: 
   airgab:
-    image: wiedmannfelix/airgab
+    image: wiedmannfelix/airgab:1.0
     container_name: airgab
     command: --user=pi \
               --host=192.168.2.233 \
