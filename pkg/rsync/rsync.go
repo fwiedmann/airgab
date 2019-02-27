@@ -72,6 +72,6 @@ func (r *Rsync) RunSync() float64 {
 	}
 
 	timeAfterSync := time.Now()
-	durationInMinutes := 166.667 * (float64(timeAfterSync.Sub(timeBeforeSync)) / float64(time.Second))
+	durationInMinutes := float64(timeAfterSync.Sub(timeBeforeSync)) / float64(time.Minute)
 	return durationInMinutes
 }
