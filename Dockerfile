@@ -1,14 +1,3 @@
-FROM golang:1.11.5 AS builder
-
-ENV GO111MODULE=on
-
-WORKDIR /go/src/github.com/fwiedmann/airgab/
-
-COPY . .
-
-RUN go get
-RUN CGO_ENABLED=0 go build -a -o airgab .
-
 FROM alpine:3.9
 
 LABEL maintainer=https://github.com/fwiedmann github-project=https://github.com/fwiedmann/airgab
@@ -24,7 +13,7 @@ RUN mkdir -pv /home/pilot/.ssh/ \
 WORKDIR /home/pilot
 
 COPY entrypoint.sh ./entrypoint.sh
-COPY --from=builder /go/src/github.com/fwiedmann/airgab/airgab ./airgab
+COPY airgab /usr/local/bin/airgab
 
 ENTRYPOINT [ "./entrypoint.sh" ]
 HEALTHCHECK --interval=10s --timeout=5s --retries=3 CMD curl -f http://localhost:9100/metrics || exit 1
