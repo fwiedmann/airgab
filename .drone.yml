@@ -1,5 +1,9 @@
 kind: pipeline
-name: default
+name: amd64
+
+platform:
+  os: linux
+  arch: amd64
 
 steps:
 - name: build-binary
@@ -9,12 +13,60 @@ steps:
     CGO_ENABLED: 0
   commands:
   - go build -a -o airgab .
-- name: build-docker-image
+- name: build-docker-image-amd64
   image: plugins/docker
   settings:
     repo: wiedmannfelix/airgab
     auto_tag: true
     auto_tag_suffix: linux-amd64
+    username:
+      from_secret: DOCKER_USER
+    password:
+      from_secret: DOCKER_PASSWORD
+- name: build-docker-image-amd64
+  image: plugins/docker
+  settings:
+    repo: wiedmannfelix/airgab
+    auto_tag: true
+    auto_tag_suffix: linux-amd64
+    username:
+      from_secret: DOCKER_USER
+    password:
+      from_secret: DOCKER_PASSWORD
+
+---
+kind: pipeline
+name: amd64
+
+platform:
+  os: linux
+  arch: arm64
+
+steps:
+- name: build-binary
+  image: golang:1.12.4
+  environment:
+    GO111MODULE: on
+    CGO_ENABLED: 0
+  commands:
+  - go build -a -o airgab .
+- name: build-docker-image-arm64
+  image: plugins/docker
+  settings:
+    repo: wiedmannfelix/airgab
+    tags:
+      - latest
+      - 'amd64-1.0'
+    username:
+      from_secret: DOCKER_USER
+    password:
+      from_secret: DOCKER_PASSWORD
+- name: build-docker-image-arm64
+  image: plugins/docker
+  settings:
+    repo: wiedmannfelix/airgab
+    tags:
+        - 'arm64-1.0'
     username:
       from_secret: DOCKER_USER
     password:
