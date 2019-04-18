@@ -18,7 +18,7 @@ steps:
   settings:
     repo: wiedmannfelix/airgab
     auto_tag: true
-    auto_tag_suffix: linux-amd64
+    auto_tag_suffix: amd64-1.0
     username:
       from_secret: DOCKER_USER
     password:
