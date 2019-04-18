@@ -1,5 +1,7 @@
 ![Image of gopher](images/appenginegophercolor.jpg)
 
+[![Build Status](https://cloud.drone.io/api/badges/fwiedmann/airgab/status.svg)](https://cloud.drone.io/fwiedmann/airgab)
+
 # airgab
 Backup your data  from a remote-host periodically with airgab. It comes with a Prometheus endpoint for monitoring. Under the hood airgab runs the backuptask via rsync. It is packaged in a Dockerfile to bundle all dependencies and make it easier to deploy.
 
