@@ -1,0 +1,21 @@
+kind: pipeline
+name: default
+
+steps:
+- name: build-binary
+  image: golang:1.12.4
+  environment:
+    GO111MODULE: on
+    CGO_ENABLED: 0
+  commands:
+  - go build -a -o airgab .
+- name: build-docker-image
+  image: plugins/docker
+  settings:
+    repo: wiedmannfelix/airgab
+    auto_tag: true
+    auto_tag_suffix: linux-amd64
+    username:
+      from_secret: DOCKER_USER
+    password:
+      from_secret: DOCKER_PASSWORD
