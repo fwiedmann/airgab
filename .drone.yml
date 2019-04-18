@@ -17,8 +17,9 @@ steps:
   image: plugins/docker
   settings:
     repo: wiedmannfelix/airgab
-    auto_tag: true
-    auto_tag_suffix: amd64-1.0
+    tags:
+      - 'amd64-1.0'
+      - latest
     username:
       from_secret: DOCKER_USER
     password:
@@ -45,7 +46,6 @@ steps:
   settings:
     repo: wiedmannfelix/airgab
     tags:
-      - latest
       - 'arm64-1.0'
     username:
       from_secret: DOCKER_USER
