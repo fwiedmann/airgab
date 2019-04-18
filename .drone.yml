@@ -46,7 +46,7 @@ steps:
     repo: wiedmannfelix/airgab
     tags:
       - latest
-      - 'amd64-1.0'
+      - 'arm64-1.0'
     username:
       from_secret: DOCKER_USER
     password:
