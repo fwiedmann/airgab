@@ -19,4 +19,4 @@ cp .id_rsa .ssh/id_rsa
 chown pilot:pilot /home/pilot/.ssh/id_rsa
 
 # step down from root and  run airgab
-su pilot -c "./airgab $*"
+su pilot -c "airgab $*"

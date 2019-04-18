@@ -10,16 +10,6 @@ prepare:
 
 cleanup:
 	sudo rm -rf ./backup
-	docker rmi --force airgab wiedmannfelix/airgab:$(IMAGE_TAG)  wiedmannfelix/airgab:latest
 
 build:
-	docker build -t airgab .
-
-run: 
-	docker run -it -v $$PWD/backup:/home/pilot/backup -v $(SSH_FOLDER)/.ssh/id_rsa:/home/pilot/.id_rsa -p 9100:9100 airgab --user=pi --host=192.168.2.233 --source=/opt/ghost --options=-a --interval=10s
-
-push:
-	docker tag airgab wiedmannfelix/airgab:$(IMAGE_TAG)
-	docker tag airgab wiedmannfelix/airgab:latest
-	docker push wiedmannfelix/airgab:$(IMAGE_TAG)
-	docker push wiedmannfelix/airgab:latest
+	GO111MODULE=on CGO_ENABLED=0 go build -a -o airgab .
